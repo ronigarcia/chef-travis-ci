@@ -1,8 +1,8 @@
-name 'install-nginx'
-maintainer 'The Authors'
-maintainer_email 'you@example.com'
+name 'install-apache'
+maintainer 'Roni Garcia'
+maintainer_email 'sgarcia.roni@gmail.com'
 license 'All Rights Reserved'
-description 'Installs/Configures install-nginx'
+description 'Installs/Configures install-apache'
 version '0.1.0'
 chef_version '>= 14.0'
 
