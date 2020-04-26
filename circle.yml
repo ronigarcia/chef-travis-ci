@@ -2,7 +2,7 @@ machine:
   services:
   - docker
   ruby:
-    version: 2.3.0
+    version: 2.4.0
   environment:
     TESTS: ubuntu centos
 
