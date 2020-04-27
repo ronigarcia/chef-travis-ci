@@ -3,12 +3,6 @@ machine:
     - docker
 dependencies:
   pre:
-    - if ! chef -v; then
-        if ! [ -f chefdk_0.3.5-1_amd64.deb ]; then
-          wget https://opscode-omnibus-packages.s3.amazonaws.com/ubuntu/12.04/x86_64/chefdk_0.3.5-1_amd64.deb;
-        fi;
-        sudo dpkg -i chefdk_0.3.5-1_amd64.deb;
-      fi
     - chef gem install specific_install
     - sudo chef gem specific_install kitchen-docker -l http://github.com/peterabbott/kitchen-docker.git -b v1.6.4
     - sudo chef gem uninstall chefspec
