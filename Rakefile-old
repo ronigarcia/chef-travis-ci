@@ -25,67 +25,6 @@
 
 require 'bundler/setup'
 
-# Checks if we are inside a Continuous Integration machine.
-#
-# @return [Boolean] whether we are inside a CI.
-# @example
-#   ci? #=> false
-def ci?
-  ENV['CI'] == 'true'
-end
-
-desc 'Clean some generated files'
-task :clean do
-  %w(
-    Berksfile.lock
-    .bundle
-    .cache
-    coverage
-    Gemfile.lock
-    .kitchen
-    metadata.json
-    vendor
-  ).each { |f| FileUtils.rm_rf(Dir.glob(f)) }
-end
-
-desc 'Generate Ruby documentation using yard'
-task :yard do
-  require 'yard'
-  YARD::Rake::YardocTask.new do |t|
-    t.stats_options = %w(--list-undoc)
-  end
-end
-
-desc 'Generate Ruby documentation'
-task doc: %w(yard)
-
-namespace :style do
-  require 'rubocop/rake_task'
-  desc 'Run Ruby style checks using rubocop'
-  RuboCop::RakeTask.new(:ruby)
-
-  require 'foodcritic'
-  desc 'Run Chef style checks using foodcritic'
-  FoodCritic::Rake::LintTask.new(:chef) do |t|
-    t.options = {
-      fail_tags: ['any'],
-      progress: true
-    }
-  end
-end
-
-desc 'Run all style checks'
-task style: %w(style:chef style:ruby)
-
-desc 'Run ChefSpec unit tests'
-task :unit do
-  require 'rspec/core/rake_task'
-  RSpec::Core::RakeTask.new(:unit) do |t|
-    t.rspec_opts = '--color --format progress'
-    t.pattern = 'test/unit/**{,/*/**}/*_spec.rb'
-  end
-end
-
 desc 'Run Test Kitchen integration tests'
 namespace :integration do
   # Generates the `Kitchen::Config` class configuration values.
@@ -144,7 +83,7 @@ end
 
 desc 'Run Test Kitchen integration tests'
 task :integration, [:regexp, :action] =>
-  ci? ? %w(integration:docker) : %w(integration:vagrant)
+  %w(integration:docker) 
 
 desc 'Run doc, style, unit and integration tests'
 task default: %w(doc style unit integration)

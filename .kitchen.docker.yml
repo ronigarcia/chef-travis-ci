@@ -1,8 +1,0 @@
----
-driver:
-  name: docker
-
-# platforms:
-# - name: ubuntu-16.04
-#   run_list: recipe[install-apache]
-# - name: centos-7

@@ -17,7 +17,7 @@ if os.family == 'debian'
     it { should be_enabled }
     it { should be_running }
   end
-elsif
+elsif os.family == 'redhat'
   describe user('apache') do
     it { should exist }
   end

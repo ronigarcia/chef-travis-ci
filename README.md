@@ -1,4 +1,3 @@
-# install-nginx
+# Install Apache
 
-TODO: Enter the cookbook description here.
-
+Instalação apache via chef
