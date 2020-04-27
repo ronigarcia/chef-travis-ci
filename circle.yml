@@ -1,19 +1,24 @@
 machine:
   services:
-  - docker
-  ruby:
-    version: 2.4.0
-  environment:
-    TESTS: (centos-6|debian-[67]) (debian-8|oraclelinux-6) ubuntu-1[24]04 (ubuntu-1504|scientific-6)
-    CHEF_VERSION: ~> 12.0
-
+    - docker
 dependencies:
-  override:
-  - bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3 --without='doc style unit integration_vagrant integration_cloud':
-      timeout: 900
-
+  pre:
+    - if ! chef -v; then
+        if ! [ -f chefdk_0.3.5-1_amd64.deb ]; then
+          wget https://opscode-omnibus-packages.s3.amazonaws.com/ubuntu/12.04/x86_64/chefdk_0.3.5-1_amd64.deb;
+        fi;
+        sudo dpkg -i chefdk_0.3.5-1_amd64.deb;
+      fi
+    - chef gem install specific_install
+    - sudo chef gem specific_install kitchen-docker -l http://github.com/peterabbott/kitchen-docker.git -b v1.6.4
+    - sudo chef gem uninstall chefspec
+    - chef gem install chefspec:4.0.1
+    - mkdir ~/.chef
+    - cp ~/${CIRCLE_PROJECT_REPONAME}/test/circle/knife.rb ~/.chef/knife.rb
+  cache_directories:
+    - ./chefdk_0.3.5-1_amd64.deb
 test:
   override:
-  - TESTS=(${TESTS// / }) ; bundle exec rake "integration:docker[${TESTS[$CIRCLE_NODE_INDEX]}]":
-      parallel: true
-      timeout: 900
+    - chef exec berks install
+    - chef exec rspec -P spec/**/*_spec.rb --tty --color
+    - chef exec kitchen test

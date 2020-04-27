@@ -1,16 +1,16 @@
 ---
 driver:
-  name: vagrant
+  name: docker
+  privileged: true
 
 provisioner:
   name: chef_zero
-# verifier:
-#   name: inspec
-  
+  attributes:
+    test-kitchen: true
+
 platforms:
-- name: ubuntu-16.04
-- name: centos-7
+  - name: ubuntu-14.04
 
 suites:
-- name: default
-  run_list: recipe[install-apache]
+  - name: default
+    run_list: recipe[install-apache]
