@@ -4,6 +4,7 @@ dist: trusty
 before_install:
 - curl -s https://packagecloud.io/install/repositories/chef/stable/script.deb.sh | sudo bash
 
+
 # Don't `bundle install` which takes about 1.5 mins
 install: 
 - sudo apt-get install chefdk
