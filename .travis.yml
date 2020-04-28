@@ -35,9 +35,3 @@ before_script:
   - foodcritic --version
 
 script: kitchen test ${INSTANCE}
-
-matrix:
-  include:
-    - script:
-      - chef exec delivery local all
-      env: UNIT_AND_LINT=1
