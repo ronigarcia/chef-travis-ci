@@ -4,18 +4,12 @@ dist: trusty
 addons:
   apt:
     sources:
-      - chef-current-trusty
+      - chef-stable-trusty
     packages:
-      - curl
-
-before_install:
-- curl -s https://packages.chef.io/files/stable/chefdk/4.7.73/ubuntu/16.04/chefdk_4.7.73-1_amd64.deb | bash
-
+      - chefdk
 
 # Don't `bundle install` which takes about 1.5 mins
-install: 
-- apt-get install chefdk
-- echo "skip bundle install"
+install: echo "skip bundle install"
 gemfile: gemfiles/Gemfile.ci
 
 branches:
