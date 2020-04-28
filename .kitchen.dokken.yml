@@ -10,7 +10,8 @@ provisioner:
   name: dokken
   deprecations_as_errors: true
   product_version: 15.4.45
-  chef_license: accept-no-persist
+  client_rb:
+    chef_license: accept
 
 verifier:
   name: inspec
