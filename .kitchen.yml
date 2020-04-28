@@ -5,7 +5,7 @@ driver:
 provisioner:
   name: chef_zero
   product_version: 15.4.45
-  chef_license: accept
+  chef_license: accept-no-persist
 
 platforms:
   - name: ubuntu-16.04
