@@ -8,6 +8,10 @@ addons:
     packages:
       - chefdk
 
+env:
+  global:
+    - CHEF_LICENSE="accept-no-persist"
+
 # Don't `bundle install` which takes about 1.5 mins
 install: echo "skip bundle install"
 gemfile: gemfiles/Gemfile.ci
